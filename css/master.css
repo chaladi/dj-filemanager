@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+/*-------------------------
+	Demo page
+-------------------------*/
+
+body {
+	background-color: #efefef;
+	font: 14px normal Arial, Helvetica, sans-serif;
+	z-index: -4;
+}
+
+.clear{
+  float: none;
+  clear: both;
+}
+
+
+
+/*  Toolbar */
+
+#toolbar{
+  border-bottom: 1px solid #ccc;
+
+}
+
+/* Breadcrubs */
+
+#breadcrumbs{
+	background:#ccc;
+	padding: 5px;
+}
+
+/*-------------------------
+	Search box
+-------------------------*/
+.nothingfound {
+	background-color: #373743;
+	width: 23em;
+	height: 21em;
+	margin: 0 auto;
+	display: none;
+	font-family: Arial;
+  border-radius: 10px;
+	-webkit-animation: showSlowlyElement 700ms; /* Chrome, Safari, Opera */
+	animation: showSlowlyElement 700ms; /* Standard syntax */
+}
+.nothingfound .nofiles {
+	margin: 30px auto;
+	top: 3em;
+	border-radius: 50%;
+	position:relative;
+	background-color: #d72f6e;
+	width: 11em;
+	height: 11em;
+	line-height: 11.4em;
+}
+.nothingfound .nofiles:after {
+	content: '×';
+	position: absolute;
+	color: #ffffff;
+	font-size: 14em;
+	margin-right: 0.092em;
+	right: 0;
+}
+
+.nothingfound span {
+	margin: 0 auto auto 6.8em;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 20px;
+	height: 13px;
+	position: relative;
+	top: 2em;
+}
+
+/*  Data */
+#data{
+	padding-left: 10px;
+	overflow-y: auto;
+}
+.folders, .files{
+	list-style: none;
+	padding: 3px 5px;
+	cursor: pointer;
+}
+.folders:hover, .files:hover,
+.selected{
+	background: #369;
+	color: #fff;
+}
