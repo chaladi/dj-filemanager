@@ -25,7 +25,7 @@
           <button class="uk-button" title="Move" id="movefiles" disabled><i class="uk-icon-cut"></i></button>
           <button class="uk-button uk-button-danger" id="deletefiles" title="Delete" disabled><i class="uk-icon-ban "></i></button>
           <button class="uk-button" title="Properties" id="properties" disabled><i class="uk-icon-info-circle"></i></button>
-          <button class="uk-button" title="Permissions" disabled><i class="uk-icon-unlock-alt"></i></button>
+          <button class="uk-button" title="Permissions" id="permissions" disabled><i class="uk-icon-unlock-alt"></i></button>
           <button class="uk-button" title="Download" id="downloadfiles" disabled><i class="uk-icon-download"></i></button>
           <button class="uk-button" title="Compress to Archive" id="makearchieve" disabled><i class="uk-icon-file-archive-o"></i></button>
         </div>
