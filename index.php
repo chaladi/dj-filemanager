@@ -20,18 +20,18 @@
           <a href="#" class="uk-button uk-button-primary" title="Install Wordpress Here"><i class="uk-icon-wordpress"></i></a>
         </div>
         <!-- Actions General -->
-        <div class="uk-button-group">
-          <a href="#" class="uk-button " title="Copy"><i class="uk-icon-copy"></i></a>
-          <a href="#" class="uk-button" title="Move"><i class="uk-icon-cut"></i></a>
-          <a href="#" class="uk-button" title="Download"><i class="uk-icon-download"></i></a>
-          <a href="#" class="uk-button" title="Properties"><i class="uk-icon-info-circle"></i></a>
-          <a href="#" class="uk-button" title="Compress to Archive"><i class="uk-icon-file-archive-o"></i></a>
-          <a href="#" class="uk-button" title="Delete"><i class="uk-icon-ban"></i></a>
-          <a href="#" class="uk-button" title="Permissions"><i class="uk-icon-unlock-alt"></i></a>
+        <div class="uk-button-group dj-actions">
+          <button class="uk-button" title="Copy" id="copyfiles" disabled><i class="uk-icon-copy"></i></button>
+          <button class="uk-button" title="Move" id="movefiles" disabled><i class="uk-icon-cut"></i></button>
+          <button class="uk-button uk-button-danger" id="deletefiles" title="Delete" disabled><i class="uk-icon-ban "></i></button>
+          <button class="uk-button" title="Properties" id="properties" disabled><i class="uk-icon-info-circle"></i></button>
+          <button class="uk-button" title="Permissions" disabled><i class="uk-icon-unlock-alt"></i></button>
+          <button class="uk-button" title="Download" id="downloadfiles" disabled><i class="uk-icon-download"></i></button>
+          <button class="uk-button" title="Compress to Archive" id="makearchieve" disabled><i class="uk-icon-file-archive-o"></i></button>
         </div>
         <!-- Actions file -->
-        <div class="uk-button-group">
-          <a href="#" class="uk-button" title="Edit"><i class="uk-icon-edit"></i></a>
+        <div class="uk-button-group dj-edit">
+          <button href="#" class="uk-button" title="Edit" disabled><i class="uk-icon-edit"></i></button>
         </div>
       </div>
       <div class="uk-flex-right">

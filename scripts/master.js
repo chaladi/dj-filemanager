@@ -1,3 +1,8 @@
+var filemanager,
+	breadcrumbs,
+	fileList,
+	breadcrumbsUrls=[],
+	currentPath='';
 
 $(function(){
 
@@ -19,6 +24,8 @@ $(function(){
 		fileList = $('#data');
 		breadcrumbsUrls=[];
 		currentPath='';
+
+
 	function scanPath(path){
 		if(!path) path=".";
 		breadcrumbs.html(`<li><i class="uk-icon-spinner uk-icon-spin"> </i> Loading...</li>`);
@@ -33,6 +40,7 @@ $(function(){
 			}
 			render(response[0]);
 			renderBreadcrumbs(path);
+			$(".dj-actions button").attr('disabled',"disabled");
 			currentPath=path;
 		});
 	}
@@ -140,7 +148,41 @@ $(function(){
 			    }
 			    $(this).addClass("selected");
 		});
-  }
+
+		$(".folders, .files").mouseup(function(e){
+			$(".dj-actions button").removeAttr('disabled');
+		});
+
+
+		$("#deletefiles").unbind("click").click(function(e){
+			UIkit.modal.confirm("Are you sure to delete selected files/folders?", function(){
+					// will be executed on confirm.
+					var dpaths=[];
+					fileList.find("li.selected").each(function(i,l){
+						dpaths.push($(this).data('path'));
+					});
+					var params="action=delete&paths="+dpaths;
+					$.post("actions.php",params,function(data){
+						if(data.err==0){
+							scanPath(currentPath);
+						}
+					});
+			});
+		});
+
+
+		$("#movefiles").unbind("click").click(function(e){
+
+		});
+
+		$("#copyfiles").unbind("click").click(function(e){
+
+		});
+
+
+  } // Main Function End
+
+
 
 	function renderBreadcrumbs(path){
 		var paths=path.split("/");

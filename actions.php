@@ -1,11 +1,11 @@
 <?php
 $err=0;
 $msg="";
-if(isset($_GET['action']) and !empty($_GET['action'])){
-  $action=$_GET['action'];
+if(isset($_REQUEST['action']) and !empty($_REQUEST['action'])){
+  $action=$_REQUEST['action'];
 
 
-
+// CREATE FOLDER
   if($action=="createfolder"){
     $path=$_GET['path'];
     $fname=$path."/".$_GET['foldername'];
@@ -27,7 +27,7 @@ if(isset($_GET['action']) and !empty($_GET['action'])){
       }
   }
 
-
+// CREATE FILE
   if($action=="createfile"){
     $path=$_GET['path'];
     $fname=$path."/".$_GET['filename'];
@@ -50,55 +50,44 @@ if(isset($_GET['action']) and !empty($_GET['action'])){
       }
   }
 
-  // switch ($action) {
-  //   case 'createfolder':
-  //     if(!empty($_GET['path']) and !empty($_GET['foldername'])){
-  //       // $path=$_GET['path']=="."?"":$_GET['path'];
-  //       $path=$_GET['path'];
-  //       $fname=$path."/".$_GET['foldername'];
-  //       if($folder != '.' && $folder != '/' ) {
-  //           createWritableFolder(dirname($folder));
-  //       }
-  //       //if(is_writable($_GET['path']) and !file_exists("$fname")) {
-  //         if(mkdir("$path", 0755, true)){
-  //           $msg="File created";
-  //         }else{
-  //           $msg="Error creating file, check permissions";
-  //           $err=1;
-  //         }
-  //       // }else{
-  //       //   $msg="Cannot create file, either exists or path not writable";
-  //       //   $err=1;
-  //       // }
-  //     }
-  //   break;
-  //   case 'createfile':
-  //     if(!empty($_GET['path']) and !empty($_GET['filename'])){
-  //       $path=$_GET['path']=="."?"":$_GET['path'];
-  //       $fname=$path."/".$_GET['dirname'];
-  //       if(is_writable($_GET['path']) and !file_exists("$fname")) {
-  //         if(fopen($fname, 'w')){
-  //           $msg="File created";
-  //         }else{
-  //           $msg="Error creating file, check permissions";
-  //           $err=1;
-  //         }
-  //       }else{
-  //         $msg="Cannot create file, either exists or path not writable";
-  //       }
-  //     }
-  //   break;
-  //
-  //
-  //
-  //   default:
-  //     // code...
-  //     break;
-  // }
+  // DELETE FILE OR Folder
+  if($action=="delete"){
+    $paths=explode(",",$_POST['paths']);
+    foreach($paths as $p){
+      delete_files($p);
+      $msg="Files/Folders deleted";
+    }
+  }
+
+
 
 
 }
 
+
+
+/*
+PHP FUNCTIONS TO DO ACTIONS
+*/
+
+/*
+ * php delete function that deals with directories recursively
+ */
+function delete_files($target) {
+    if(is_dir($target)){
+        $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+
+        foreach( $files as $file ){
+            delete_files( $file );
+        }
+
+        rmdir( $target );
+    } elseif(is_file($target)) {
+        unlink( $target );
+    }
+}
+
+// create folder without error
 function createWritableFolder($folder)
 {
     if($folder != '.' && $folder != '/' ) {
