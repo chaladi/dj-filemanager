@@ -58,7 +58,48 @@ if(isset($_REQUEST['action']) and !empty($_REQUEST['action'])){
       $msg="Files/Folders deleted";
     }
   }
+  // End Delete files
 
+  // Upload files
+  if($action=="upload"){
+    $f=$_FILES['file'];
+  	if($f['error']==0){
+  		$output_dir = $_POST['path'];
+  		$filename = $f['name'];
+  		$serverFile = $filename;
+  		$tmpfile=$f['tmp_name'];
+  		$max_filesize = 10485760;
+
+  		//$allowed_filetypes = array('.jpg','.jpeg','.png','.gif');
+  		//$ext = substr($filename, strpos($filename,'.'), strlen($filename)-1);
+
+  		$err=0;
+
+  		//if(in_array($ext,$allowed_filetypes)){
+  			if(move_uploaded_file($tmpfile,$output_dir ."/". $serverFile)){
+  					$msg="File Uploaded";
+  					$err=0;
+  					$returnData = array( "serverFile" => $serverFile, "fpath"=>$output_dir . $serverFile, "err"=>$err, "msg"=>$msg );
+  					echo json_encode($returnData);
+            die();
+  			}else{
+  					$msg="Upload Problem";
+  					$err=1;
+  					$returnData = array( "serverFile" => $filename, "fpath"=>$output_dir . $serverFile, "err"=>$err, "msg"=>$msg );
+  					echo json_encode($returnData);
+  					die();
+  			}
+  		// }else{
+  		// 		$msg="The file you attempted to upload is not allowed.";
+  		// 		$err=0;
+  		// 		$returnData = array( "serverFile" => $filename, "fpath"=>$output_dir . $serverFile, "err"=>$err );
+  		// 		echo json_encode($returnData);
+  		// 		die();
+  		// }
+  	}
+
+  }
+  // End upload files
 
 
 

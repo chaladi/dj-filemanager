@@ -140,7 +140,7 @@ $(function(){
 		});
 
 
-
+		// MULTI SELECT FILES USING CONTROL KEY (shift key not yet added)
 		var lis=$(".folders, .files").click(function(e){
 			if(!e.ctrlKey) {
 			        // Ctrl not pressed, clear previous selections
@@ -169,6 +169,106 @@ $(function(){
 					});
 			});
 		});
+
+		// Upload files
+		$("#uploadfilesmodal").unbind("click").click(function(){
+			var upmodal = UIkit.modal("#uploadmodal");
+			$("#uploadform").trigger("reset");
+			upmodal.show();
+		});
+
+		var upload = document.getElementById('fileup');
+		var uploadinfo = $('#dj-uploadinfo');
+		var uploadfiles;
+		var currentuploadFile=0;
+		var lastFile=0;
+		upload.onchange = function(e){
+			e.preventDefault();
+			$("#uploadFiles").removeAttr("disabled");
+		}
+
+		$("#fileup").change()
+		$("#uploadFiles").unbind("click").click(function(e) {
+			if (window.File && window.FileReader && window.FileList && window.Blob) {
+
+				// if(upload){
+				// 	upload.onchange = function(e){
+				// 		e.preventDefault();
+						uploadfiles = upload.files;
+						if (!uploadfiles.length) {
+							uploadinfo.empty().show();
+							uploadinfo.append('<p class="uk-text-warning">No files selected</p>');
+						}else{
+							uploadinfo.empty().show();
+							uploadInitiate(currentuploadFile);
+							// for (var i = 0; i < files.length; i++) {
+							// 	uploadinfo.append('<div class="uk-alert uk-alert-primary">Uploading '+files[i].name+'</div>');
+							// 	if((i+1)==files.length) lastFile=1;
+							// 	uploadFiles(files[i]);
+							// }
+						}
+				// 		return false;
+				// 	};
+				// }
+				function uploadInitiate(f){
+					uploadinfo.append('<p class="uk-text-primary">Uploading '+uploadfiles[f].name+'</p>');
+					uploadFiles(uploadfiles[f]);
+					currentuploadFile++;
+				}
+
+				function uploadFiles(file){
+					var data = new FormData();
+					data.append("file", file);
+					data.append("action", "upload");
+					data.append("path", currentPath);
+
+					var upurl="actions.php";
+					var xhr = new XMLHttpRequest();
+					xhr.upload.addEventListener("progress",uploadProgress,false);
+					xhr.addEventListener("load",uploadDone,false);
+					xhr.addEventListener("error",uploadError,false);
+					xhr.open("POST", upurl, true);
+					xhr.send(data);
+				}
+
+				function uploadProgress(){
+					jQuery("#dj-uploadprogress").show();
+					jQuery("#dj-uploadprogress").html('<div class="uk-alert uk-alert-primary"><i class="uk-icon-spinner uk-icon-spin" id="myloader"></i> Uploading Files...</div>');
+				}
+
+				function uploadDone(data){
+					data=data.target.responseText;
+					data=jQuery.parseJSON(data);
+					if(data.err==0){
+						uploadinfo.append('<p class="uk-text-success">'+data.serverFile+' uploaded.</p>');
+						if(currentuploadFile==uploadfiles.length){
+							uploadinfo.append('<p class="uk-text-success">All Done.</p>');
+							jQuery("#dj-uploadprogress").hide();
+							$('#uploadmodal').on(
+								{
+									'hide.uk.modal': function(){
+										scanPath(currentPath);
+							  	}
+								});
+						}else{
+							uploadInitiate(currentuploadFile);
+						}
+					}
+					// jQuery("#dj-uploadprogress").hide();
+				}
+
+				function uploadError(data){
+					uploadinfo.append('<div class="uk-alert uk-alert-danger">Error while uploading file. Please try again</div>');
+				}
+
+			} else {
+				UIkit.modal.alert("The File APIs are not fully supported in this browser.Please use another browser");
+			}
+
+		});
+
+
+		//  End upload files
 
 
 		$("#movefiles").unbind("click").click(function(e){
