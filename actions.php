@@ -89,13 +89,7 @@ if(isset($_REQUEST['action']) and !empty($_REQUEST['action'])){
   					echo json_encode($returnData);
   					die();
   			}
-  		// }else{
-  		// 		$msg="The file you attempted to upload is not allowed.";
-  		// 		$err=0;
-  		// 		$returnData = array( "serverFile" => $filename, "fpath"=>$output_dir . $serverFile, "err"=>$err );
-  		// 		echo json_encode($returnData);
-  		// 		die();
-  		// }
+
   	}
 
   }

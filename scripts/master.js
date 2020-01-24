@@ -190,10 +190,7 @@ $(function(){
 		$("#fileup").change()
 		$("#uploadFiles").unbind("click").click(function(e) {
 			if (window.File && window.FileReader && window.FileList && window.Blob) {
-
-				// if(upload){
-				// 	upload.onchange = function(e){
-				// 		e.preventDefault();
+				
 						uploadfiles = upload.files;
 						if (!uploadfiles.length) {
 							uploadinfo.empty().show();
@@ -201,15 +198,7 @@ $(function(){
 						}else{
 							uploadinfo.empty().show();
 							uploadInitiate(currentuploadFile);
-							// for (var i = 0; i < files.length; i++) {
-							// 	uploadinfo.append('<div class="uk-alert uk-alert-primary">Uploading '+files[i].name+'</div>');
-							// 	if((i+1)==files.length) lastFile=1;
-							// 	uploadFiles(files[i]);
-							// }
-						}
-				// 		return false;
-				// 	};
-				// }
+
 				function uploadInitiate(f){
 					uploadinfo.append('<p class="uk-text-primary">Uploading '+uploadfiles[f].name+'</p>');
 					uploadFiles(uploadfiles[f]);
