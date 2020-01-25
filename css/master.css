@@ -16,6 +16,15 @@ body {
   clear: both;
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
 
 
 /*  Toolbar */
@@ -81,13 +90,16 @@ body {
 	padding-left: 10px;
 	overflow-y: auto;
 }
-.folders, .files{
+.fitem{
 	list-style: none;
 	padding: 3px 5px;
 	cursor: pointer;
 }
-.folders:hover, .files:hover,
-.selected{
+.fitem:hover{
+	background: #ddd;
+}
+.fitem.selected,
+.fitem.selected:hover{
 	background: #369;
 	color: #fff;
 }

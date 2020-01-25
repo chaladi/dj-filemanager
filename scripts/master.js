@@ -96,7 +96,7 @@ $(function(){
         }
 
 				// var folder = $('<dd class="folders"><a href="'+ f.path +'" title="'+ f.path +'" class="folders">'+icon+'<span class="name">' + name + '</span> <span class="details">' + itemsLength + '</span></a></dd>');
-        var folder = $(`<li class="folders" data-path="${f.path}">${icon} ${name}</li>`);
+        var folder = $(`<li class="fitem folders" data-path="${f.path}">${icon} ${name}</li>`);
         folder.appendTo(fileList);
       });
 
@@ -120,7 +120,7 @@ $(function(){
         icon = '<i class="uk-icon-'+fileTypeIcon+'"></i> ';
 
         // var file = $('<li class="files"><a href="'+ f.path+'" title="'+ f.path +'" class="files">'+icon+'<span class="name">'+ name +'</span> <span class="details">'+fileSize+'</span></a></li>');
-				var file = $(`<li class="files" data-path="${f.path}">${icon} ${name}</li>`);
+				var file = $(`<li class="fitem files" data-path="${f.path}">${icon} ${name}</li>`);
 
         file.appendTo(fileList);
       });
@@ -141,15 +141,45 @@ $(function(){
 
 
 		// MULTI SELECT FILES USING CONTROL KEY (shift key not yet added)
-		var lis=$(".folders, .files").click(function(e){
+		var prevEl=-1;
+		var currentEl=-1;
+		var lis=$(".fitem").click(function(e){
 			if(!e.ctrlKey) {
-			        // Ctrl not pressed, clear previous selections
-			         lis.removeClass("selected");
-			    }
-			    $(this).addClass("selected");
+				if(!e.shiftKey){
+					// Ctrl not pressed, clear previous selections
+					$(".fitem").removeClass("selected");
+				}else{
+					if(currentEl>=0){
+						prevEl=currentEl;
+						currentEl=$(this).index();
+						if(prevEl>currentEl){
+							firstHolder=prevEl;
+							prevEl=currentEl;
+							currentEl=firstHolder;
+						}
+						$(".fitem").removeClass("selected");
+						for(i=prevEl;i<=currentEl;i++){
+							fileList.find("li").eq(i).addClass("selected");
+						}
+						return false;
+					}
+				}
+				  // lis.removeClass("selected");
+			}else{
+				if($(this).hasClass("selected")){
+					$(this).removeClass("selected");
+					return false;
+				}
+			}
+
+				$(this).addClass("selected");
+				currentEl=$(this).index();
+
 		});
 
-		$(".folders, .files").mouseup(function(e){
+
+
+		$(".fitem").mouseup(function(e){
 			$(".dj-actions button").removeAttr('disabled');
 		});
 
@@ -190,7 +220,7 @@ $(function(){
 		$("#fileup").change()
 		$("#uploadFiles").unbind("click").click(function(e) {
 			if (window.File && window.FileReader && window.FileList && window.Blob) {
-				
+
 						uploadfiles = upload.files;
 						if (!uploadfiles.length) {
 							uploadinfo.empty().show();
@@ -198,7 +228,7 @@ $(function(){
 						}else{
 							uploadinfo.empty().show();
 							uploadInitiate(currentuploadFile);
-
+						}
 				function uploadInitiate(f){
 					uploadinfo.append('<p class="uk-text-primary">Uploading '+uploadfiles[f].name+'</p>');
 					uploadFiles(uploadfiles[f]);
@@ -250,7 +280,7 @@ $(function(){
 					uploadinfo.append('<div class="uk-alert uk-alert-danger">Error while uploading file. Please try again</div>');
 				}
 
-			} else {
+			}else{
 				UIkit.modal.alert("The File APIs are not fully supported in this browser.Please use another browser");
 			}
 
